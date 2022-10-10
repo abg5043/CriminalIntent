@@ -1,5 +1,6 @@
 package com.aaronbgrant.criminalintent
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,7 +36,12 @@ class CrimeListFragment: Fragment() {
     ): View? {
         _binding = FragmentCrimeListBinding.inflate(inflater, container, false)
 
-        binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
+        if(this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
+        }
+        else{
+            binding.crimeRecyclerView.layoutManager = GridLayoutManager(context, 3)
+        }
 
         val crimes = crimeListViewModel.crimes
         val adapter = CrimeListAdapter(crimes)
