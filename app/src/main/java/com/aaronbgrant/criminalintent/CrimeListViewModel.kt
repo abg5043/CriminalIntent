@@ -1,6 +1,7 @@
 package com.aaronbgrant.criminalintent
 
 import androidx.lifecycle.ViewModel
+import java.text.DateFormat
 import java.util.*
 
 class CrimeListViewModel: ViewModel() {
@@ -13,7 +14,7 @@ class CrimeListViewModel: ViewModel() {
             val crime = Crime(
                 id = UUID.randomUUID(),
                 title ="Crime #$i",
-                date = Date(),
+                date = DateFormat.getDateInstance(DateFormat.FULL).format(Date()),
                 isSolved = i % 2 == 0,
                 requiresPolice = i % 2 == 1
             )

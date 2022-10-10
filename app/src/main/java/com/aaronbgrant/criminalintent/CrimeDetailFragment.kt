@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.aaronbgrant.criminalintent.databinding.FragmentCrimeDetailBinding
+import java.text.DateFormat
 import java.util.*
 
 class CrimeDetailFragment: Fragment() {
@@ -24,7 +25,7 @@ class CrimeDetailFragment: Fragment() {
         crime = Crime(
             id = UUID.randomUUID(),
             title = "",
-            date = Date(),
+            date = DateFormat.getDateInstance(DateFormat.FULL).format(Date()),
             isSolved = false,
             requiresPolice = false
         )

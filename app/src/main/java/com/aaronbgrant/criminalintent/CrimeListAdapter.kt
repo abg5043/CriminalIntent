@@ -1,6 +1,7 @@
 package com.aaronbgrant.criminalintent
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,11 @@ class NoPoliceCrimeHolder(
                 binding.root.context, "${crime.title} clicked!",
                 Toast.LENGTH_SHORT ).show()
         }
+        binding.crimeSolved.visibility = if (crime.isSolved) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }
 
@@ -57,12 +63,12 @@ class CrimeListAdapter(
     ) : CrimeHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        if(viewType == POLICE.NO.value) {
+        return if(viewType == POLICE.NO.value) {
             val binding = ListItemCrimeBinding.inflate(inflater, parent, false)
-            return NoPoliceCrimeHolder(binding)
+            NoPoliceCrimeHolder(binding)
         } else {
             val binding = ListItemCrimePoliceBinding.inflate(inflater, parent, false)
-            return PoliceCrimeHolder(binding)
+            PoliceCrimeHolder(binding)
         }
     }
 
