@@ -23,7 +23,7 @@ class CrimeListViewModel: ViewModel() {
             val crime = Crime(
                 id = UUID.randomUUID(),
                 title ="Crime #$i",
-                date = DateFormat.getDateInstance(DateFormat.FULL).format(Date()),
+                date = Date(),
                 isSolved = i % 2 == 0,
                 requiresPolice = i % 2 == 1
             )

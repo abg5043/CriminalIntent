@@ -25,7 +25,7 @@ class CrimeDetailFragment: Fragment() {
         crime = Crime(
             id = UUID.randomUUID(),
             title = "",
-            date = DateFormat.getDateInstance(DateFormat.FULL).format(Date()),
+            date = Date(),
             isSolved = false,
             requiresPolice = false
         )

@@ -1,12 +1,14 @@
 package com.aaronbgrant.criminalintent
 
-import java.text.DateFormat
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity
 data class Crime(
-    val id: UUID,
+    @PrimaryKey val id: UUID,
     val title: String,
-    val date: String,
+    val date: Date,
     val isSolved: Boolean,
     val requiresPolice: Boolean
     )
