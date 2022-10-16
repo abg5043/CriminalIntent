@@ -1,7 +1,7 @@
 package com.aaronbgrant.criminalintent.database
 
 import androidx.room.TypeConverter
-import java.util.*
+import java.util.Date
 
 class CrimeTypeConverters {
     @TypeConverter

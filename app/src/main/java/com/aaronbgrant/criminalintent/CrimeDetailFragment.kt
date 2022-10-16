@@ -7,27 +7,27 @@ import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.aaronbgrant.criminalintent.databinding.FragmentCrimeDetailBinding
-import java.text.DateFormat
-import java.util.*
+import java.util.Date
+import java.util.UUID
 
-class CrimeDetailFragment: Fragment() {
+class CrimeDetailFragment : Fragment() {
 
-    private lateinit var crime: Crime
     private var _binding: FragmentCrimeDetailBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
-    override fun onCreate(savedInstanceState : Bundle? ) {
+    private lateinit var crime: Crime
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         crime = Crime(
             id = UUID.randomUUID(),
             title = "",
             date = Date(),
-            isSolved = false,
-            requiresPolice = false
+            isSolved = false
         )
     }
 
@@ -36,7 +36,8 @@ class CrimeDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCrimeDetailBinding.inflate(layoutInflater, container, false)
+        _binding =
+            FragmentCrimeDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,7 +45,7 @@ class CrimeDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            crimeTitle.doOnTextChanged{ text, _, _, _ ->
+            crimeTitle.doOnTextChanged { text, _, _, _ ->
                 crime = crime.copy(title = text.toString())
             }
 
@@ -53,7 +54,7 @@ class CrimeDetailFragment: Fragment() {
                 isEnabled = false
             }
 
-            crimeSolved.setOnCheckedChangeListener{ _, isChecked ->
+            crimeSolved.setOnCheckedChangeListener { _, isChecked ->
                 crime = crime.copy(isSolved = isChecked)
             }
         }

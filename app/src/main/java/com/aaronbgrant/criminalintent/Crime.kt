@@ -2,13 +2,13 @@ package com.aaronbgrant.criminalintent
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
+import java.util.UUID
+import java.util.Date
 
 @Entity
 data class Crime(
     @PrimaryKey val id: UUID,
     val title: String,
     val date: Date,
-    val isSolved: Boolean,
-    val requiresPolice: Boolean
-    )
+    val isSolved: Boolean
+)

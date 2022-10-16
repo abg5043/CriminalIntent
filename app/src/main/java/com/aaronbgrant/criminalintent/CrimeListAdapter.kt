@@ -5,33 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.aaronbgrant.criminalintent.databinding.ListItemCrimeBinding
-import com.aaronbgrant.criminalintent.databinding.ListItemCrimePoliceBinding
 
-enum class POLICE(val value: Int) {
-    YES(1),
-    NO(0);
-}
-
-open class CrimeHolder(
-    private val binding: ViewBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-}
-
-class NoPoliceCrimeHolder(
+class CrimeHolder(
     private val binding: ListItemCrimeBinding
-): CrimeHolder(binding) {
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(crime: Crime) {
         binding.crimeListTitle.text = crime.title
         binding.crimeListDate.text = crime.date.toString()
 
         binding.root.setOnClickListener {
             Toast.makeText(
-                binding.root.context, "${crime.title} clicked!",
-                Toast.LENGTH_SHORT ).show()
+                binding.root.context,
+                "${crime.title} clicked!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+
         binding.crimeSolved.visibility = if (crime.isSolved) {
             View.VISIBLE
         } else {
@@ -40,56 +30,22 @@ class NoPoliceCrimeHolder(
     }
 }
 
-class PoliceCrimeHolder(
-    private val binding: ListItemCrimePoliceBinding
-): CrimeHolder(binding) {
-    fun bind(crime: Crime) {
-        binding.crimeListTitle.text = crime.title
-        binding.crimeListDate.text = crime.date.toString()
-
-        binding.root.setOnClickListener {
-            Toast.makeText(
-                binding.root.context, "${crime.title} clicked!",
-                Toast.LENGTH_SHORT ).show()
-        }
-    }
-}
-
 class CrimeListAdapter(
     private val crimes: List<Crime>
 ) : RecyclerView.Adapter<CrimeHolder>() {
     override fun onCreateViewHolder(
-        parent: ViewGroup, viewType: Int
-    ) : CrimeHolder {
+        parent: ViewGroup,
+        viewType: Int
+    ): CrimeHolder {
         val inflater = LayoutInflater.from(parent.context)
-
-        return if(viewType == POLICE.NO.value) {
-            val binding = ListItemCrimeBinding.inflate(inflater, parent, false)
-            NoPoliceCrimeHolder(binding)
-        } else {
-            val binding = ListItemCrimePoliceBinding.inflate(inflater, parent, false)
-            PoliceCrimeHolder(binding)
-        }
+        val binding = ListItemCrimeBinding.inflate(inflater, parent, false)
+        return CrimeHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
         val crime = crimes[position]
-        if(holder is NoPoliceCrimeHolder) {
-            (holder as NoPoliceCrimeHolder).bind(crime)
-        } else {
-            (holder as PoliceCrimeHolder).bind(crime)
-        }
-
+        holder.bind(crime)
     }
 
-    override fun getItemCount(): Int = crimes.size
-
-    override fun getItemViewType(position: Int): Int {
-        val crime = crimes[position]
-        return when(crime.requiresPolice) {
-            true -> POLICE.YES.value
-            else -> POLICE.NO.value
-        }
-    }
-
+    override fun getItemCount() = crimes.size
 }
