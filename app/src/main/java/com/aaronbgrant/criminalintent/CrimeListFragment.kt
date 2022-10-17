@@ -1,5 +1,6 @@
 package com.aaronbgrant.criminalintent
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aaronbgrant.criminalintent.databinding.FragmentCrimeListBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 private const val TAG = "CrimeListFragment"
@@ -33,8 +34,12 @@ class CrimeListFragment : Fragment() {
     ): View? {
         _binding = FragmentCrimeListBinding.inflate(inflater, container, false)
 
-        binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
-
+        if(this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            binding.crimeRecyclerView.layoutManager = LinearLayoutManager(context)
+        }
+        else{
+            binding.crimeRecyclerView.layoutManager = GridLayoutManager(context, 3)
+        }
         return binding.root
     }
 
