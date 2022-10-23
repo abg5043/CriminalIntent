@@ -1,9 +1,12 @@
 package com.aaronbgrant.criminalintent
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,6 +23,26 @@ class CrimeDetailFragment : Fragment() {
 
     private val crimeDetailViewModel: CrimeDetailViewModel by viewModels {
         CrimeDetailViewModelFactory(args.crimeId)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                if (isEnabled && binding.crimeTitle.text.isNotBlank()) {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                } else {
+                    Toast.makeText(activity, "Please enter a crime title", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback);
     }
 
     private var _binding: FragmentCrimeDetailBinding? = null
