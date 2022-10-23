@@ -1,7 +1,6 @@
 package com.aaronbgrant.criminalintent
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.aaronbgrant.criminalintent.databinding.FragmentCrimeDetailBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.Date
-import java.util.UUID
 
 class CrimeDetailFragment : Fragment() {
 
@@ -58,7 +54,9 @@ class CrimeDetailFragment : Fragment() {
             }
 
             crimeSolved.setOnCheckedChangeListener{ _, isChecked ->
-
+                crimeDetailViewModel.updateCrime { oldCrime ->
+                    oldCrime.copy(isSolved = isChecked)
+                }
             }
         }
 
