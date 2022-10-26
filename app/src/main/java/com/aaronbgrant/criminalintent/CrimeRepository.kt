@@ -23,7 +23,6 @@ class CrimeRepository private constructor(
             CrimeDatabase::class.java,
             DATABASE_NAME
         )
-        .createFromAsset(DATABASE_NAME)
         .addMigrations(migration_1_2)
         .build()
 
@@ -34,6 +33,11 @@ class CrimeRepository private constructor(
             database.crimeDao().updateCrime(crime)
         }
     }
+
+    suspend fun addCrime(crime: Crime) {
+        database.crimeDao().addCrime(crime)
+    }
+
 
     suspend fun getCrime(id: UUID): Crime = database.crimeDao().getCrime(id)
 
